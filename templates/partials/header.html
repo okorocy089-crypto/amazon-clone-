@@ -1,0 +1,67 @@
+{% load static %}
+<header class="site-header">
+  <div class="header-top">
+
+    {# Amazon SVG logo #}
+    <a href="{% url 'homepage' %}" class="logo" aria-label="Amazon home">
+    <img src="{% static 'images/images.png' %}" alt="Amazon" class="logo-img" style="height:46px;width:auto;">  
+    </a>
+
+    <form method="get" action="{% url 'search_results' %}" class="search-bar">
+      <input type="text" name="q" class="search-input" placeholder="Search Amazon"
+             id="search-input" autocomplete="off">
+      <button type="submit" class="search-btn" aria-label="Search">→</button>
+    </form>
+
+    <a href="{% url 'cart_page' %}" class="cart-link">
+      Cart
+      <span class="cart-badge">{{ cart_count }}</span>
+    </a>
+
+    <div class="profile-wrapper">
+      <button class="profile-icon-btn" aria-label="Account">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="8" r="4"></circle>
+          <path d="M4 20c0-4 4-6 8-6s8 2 8 6"></path>
+        </svg>
+      </button>
+
+      <div class="profile-dropdown">
+        {% if request.user.is_authenticated %}
+          <div class="profile-user-row">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="8" r="4"></circle>
+              <path d="M4 20c0-4 4-6 8-6s8 2 8 6"></path>
+            </svg>
+            <span class="profile-name">{{ request.user.first_name }}</span>
+          </div>
+          <a href="{% url 'logout' %}" class="btn btn-block">Logout</a>
+        {% else %}
+          <a href="{% url 'login' %}" class="btn btn-block">Login</a>
+          <a href="{% url 'register' %}" class="btn btn-block" style="margin-top:0.5rem;">Register</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <div class="header-bottom">
+    <button class="menu-toggle" id="menu-toggle-btn">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2.5">
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+      All
+    </button>
+    <a href="#">Today's Deals</a>
+    <a href="mailto:learner4010@gmail.com">Customer Support</a>
+    {% if request.user.is_authenticated %}
+      <a href="#">Sell</a>
+    {% else %}
+      <a href="{% url 'register' %}">Sell</a>
+    {% endif %}
+  </div>
+</header>

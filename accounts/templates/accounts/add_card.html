@@ -1,0 +1,107 @@
+{% extends "base_site.html" %}
+{% load static %}
+
+{% block title %}Link your card — Amazon{% endblock %}
+
+{% block page_css %}
+<link rel="stylesheet" href="{% static 'css/forms.css' %}">
+{% endblock %}
+
+{% block main %}
+<div class="form-page">
+  <div class="form-card">
+    <h1 class="form-title">
+      {% if existing_card %}Update your card{% else %}Link a credit/debit card{% endif %}
+    </h1>
+    <p class="form-subtitle">Your card details are stored securely and never shared.</p>
+
+    <form method="post" novalidate>
+      {% csrf_token %}
+
+      {% if form.errors %}
+        <div class="form-error-banner">
+          Please correct the errors below.
+        </div>
+      {% endif %}
+
+      <label class="field-label">Card issuer</label>
+      <select class="field" name="issuer_type">
+        {% for value, label in form.fields.issuer_type.choices %}
+          <option value="{{ value }}"
+            {% if form.issuer_type.value == value %}selected{% endif %}>
+            {{ label }}
+          </option>
+        {% endfor %}
+      </select>
+      {% if form.issuer_type.errors %}
+        <div class="field-error">{{ form.issuer_type.errors.0 }}</div>
+      {% endif %}
+
+      <label class="field-label">Cardholder name</label>
+      <input
+        class="field"
+        type="text"
+        name="cardholder_name"
+        placeholder="Name on card"
+        value="{{ form.cardholder_name.value|default:'' }}"
+      >
+      {% if form.cardholder_name.errors %}
+        <div class="field-error">{{ form.cardholder_name.errors.0 }}</div>
+      {% endif %}
+
+      <label class="field-label">Card number</label>
+      <input
+        class="field"
+        type="password"
+        name="card_number"
+        placeholder="1234 5678 9012 3456"
+        maxlength="16"
+      >
+      {% if form.card_number.errors %}
+        <div class="field-error">{{ form.card_number.errors.0 }}</div>
+      {% endif %}
+
+      <div class="field-row">
+        <div>
+          <label class="field-label">Expiry</label>
+          <input
+            class="field"
+            type="text"
+            name="expiry"
+            placeholder="MM/YY"
+            maxlength="5"
+            value="{{ form.expiry.value|default:'' }}"
+          >
+          {% if form.expiry.errors %}
+            <div class="field-error">{{ form.expiry.errors.0 }}</div>
+          {% endif %}
+        </div>
+        <div>
+          <label class="field-label">CVV</label>
+          <input
+            class="field"
+            type="password"
+            name="cvv"
+            placeholder="123"
+            maxlength="4"
+          >
+          {% if form.cvv.errors %}
+            <div class="field-error">{{ form.cvv.errors.0 }}</div>
+          {% endif %}
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-block">
+        {% if existing_card %}Update card{% else %}Save card{% endif %}
+      </button>
+    </form>
+
+    {% if existing_card %}
+      <form method="post" action="{% url 'unlink_card' %}" style="margin-top:1rem;">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-remove btn-block">Unlink card</button>
+      </form>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

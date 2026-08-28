@@ -1,0 +1,48 @@
+{% extends "base_site.html" %}
+{% load static %}
+
+{% block title %}{{ product.name }} — Amazon{% endblock %}
+
+{% block page_css %}
+<link rel="stylesheet" href="{% static 'css/catalog.css' %}">
+{% endblock %}
+
+{% block main %}
+<div class="product-detail-page">
+  <div class="product-detail-top">
+    <div class="product-detail-img">
+      {% if product.image %}
+  <img src="{{ product.image.url }}" alt="{{ product.name }}">
+{% else %}
+  <img src="{% static 'images/placeholder.png' %}" alt="No image available">
+{% endif %}
+
+    </div>
+
+    <div class="product-detail-info">
+      <div class="product-detail-name-box">
+        <h1>{{ product.name }}</h1>
+      </div>
+
+      <div class="product-detail-price-row">
+        <p class="product-detail-price">${{ product.price }}</p>
+        <button
+          class="btn add-to-cart-btn"
+          data-product-id="{{ product.id }}"
+          type="button"
+        >
+          Add to cart
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="product-detail-description">
+    <p>{{ product.description }}</p>
+  </div>
+</div>
+{% endblock %}
+
+{% block page_js %}
+<script src="{% static 'js/add_to_cart.js' %}"></script>
+{% endblock %}

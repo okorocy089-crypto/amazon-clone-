@@ -1,0 +1,50 @@
+{% extends "base_site.html" %}
+{% load static %}
+
+{% block title %}Results for "{{ query }}" — Amazon{% endblock %}
+
+{% block page_css %}
+<link rel="stylesheet" href="{% static 'css/catalog.css' %}">
+{% endblock %}
+
+{% block main %}
+<div class="listing-page">
+  <h1 class="listing-title">Results for "{{ query }}"</h1>
+
+  {% if results %}
+    <div class="product-grid">
+      {% for product in results %}
+        <div class="product-card">
+          <a href="{% url 'product_detail' product.id %}" class="product-card-img">
+            {% if product.image %}
+  <img src="{{ product.image.url }}" alt="{{ product.name }}">
+{% else %}
+  <img src="{% static 'images/placeholder.png' %}" alt="No image available">
+{% endif %}
+
+          </a>
+          <a href="{% url 'product_detail' product.id %}" class="product-card-name">
+            {{ product.name }}
+          </a>
+          <p class="product-card-price">${{ product.price }}</p>
+          <button
+            class="btn add-to-cart-btn"
+            data-product-id="{{ product.id }}"
+            type="button"
+          >
+            Add to cart
+          </button>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="empty-state" style="min-height: 40vh;">
+      <p>No item found</p>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}
+
+{% block page_js %}
+<script src="{% static 'js/add_to_cart.js' %}"></script>
+{% endblock %}

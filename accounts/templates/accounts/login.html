@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Login — Amazon{% endblock %}
+
+{% block content %}
+<div class="auth-page">
+  <div class="auth-card">
+    <h1 class="auth-title">Login</h1>
+
+    <form method="post" novalidate>
+      {% csrf_token %}
+
+      {% if error %}
+        <div class="form-error-banner">{{ error }}</div>
+      {% endif %}
+
+      <input
+        class="field"
+        type="email"
+        name="email"
+        placeholder="Email"
+      >
+
+      <input
+        class="field"
+        type="password"
+        name="password"
+        placeholder="Password"
+      >
+
+      <button type="submit" class="btn btn-block">Login</button>
+    </form>
+
+    <p class="auth-footer-link">
+      Forgot password? <a href="{% url 'password_reset_email' %}">Click here</a><br>
+      Don't have an account? <a href="{% url 'register' %}">Register</a>
+    </p>
+  </div>
+</div>
+{% endblock %}

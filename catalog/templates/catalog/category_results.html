@@ -1,0 +1,46 @@
+{% extends "base_site.html" %}
+{% load static %}
+
+{% block title %}Category: {{ category.name }} — Amazon{% endblock %}
+
+{% block page_css %}
+<link rel="stylesheet" href="{% static 'css/catalog.css' %}">
+{% endblock %}
+
+{% block main %}
+<div class="listing-page">
+  <h1 class="listing-title">{{ category.name }}</h1>
+
+  <div class="product-grid">
+    {% for product in products %}
+      <div class="product-card">
+        <a href="{% url 'product_detail' product.id %}" class="product-card-img">
+          {% if product.image %}
+  <img src="{{ product.image.url }}" alt="{{ product.name }}">
+{% else %}
+  <img src="{% static 'images/placeholder.png' %}" alt="No image available">
+{% endif %}
+
+        </a>
+        <a href="{% url 'product_detail' product.id %}" class="product-card-name">
+          {{ product.name }}
+        </a>
+        <p class="product-card-price">${{ product.price }}</p>
+        <button
+          class="btn add-to-cart-btn"
+          data-product-id="{{ product.id }}"
+          type="button"
+        >
+          Add to cart
+        </button>
+      </div>
+    {% empty %}
+      <p class="listing-empty">No item found</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
+
+{% block page_js %}
+<script src="{% static 'js/add_to_cart.js' %}"></script>
+{% endblock %}

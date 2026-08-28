@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Security question — Amazon{% endblock %}
+
+{% block content %}
+<div class="auth-page">
+  <div class="auth-card" style="max-width: 480px;">
+    <h1 class="auth-title">
+      Choose a question to answer to help log you back in incase you forget
+      your password
+    </h1>
+
+    {% if error %}
+      <div class="form-error-banner">{{ error }}</div>
+    {% endif %}
+
+    <form method="post" id="security-form" novalidate>
+      {% csrf_token %}
+
+      <input type="hidden" name="security_question" id="security_question_value">
+
+      <select class="field" id="question_select">
+        <option value="" disabled selected>Choose question</option>
+        {% for value, label in questions %}
+          <option value="{{ value }}">{{ label }}</option>
+        {% endfor %}
+      </select>
+
+      <input
+        class="field"
+        type="text"
+        name="security_answer"
+        id="security_answer_input"
+        placeholder="Your answer"
+        style="display: none;"
+      >
+
+      <button type="submit" class="btn btn-block">Continue</button>
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  const select = document.getElementById("question_select");
+  const hiddenQuestion = document.getElementById("security_question_value");
+  const answerInput = document.getElementById("security_answer_input");
+
+  select.addEventListener("change", () => {
+    const chosenText = select.options[select.selectedIndex].text;
+
+    hiddenQuestion.value = select.value;
+
+    select.style.display = "none";
+    answerInput.placeholder = chosenText;
+    answerInput.style.display = "block";
+    answerInput.focus();
+  });
+</script>
+{% endblock %}

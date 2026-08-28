@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/site.css' %}">
+<link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
+<link rel="stylesheet" href="{% static 'css/search.css' %}">
+<link rel="stylesheet" href="{% static 'css/eye_toggle.css' %}">
+<link rel="stylesheet" href="{% static 'css/forms.css' %}">
+{% block page_css %}{% endblock %}
+{% endblock %}
+
+{% block content %}
+{% csrf_token %}
+{% include "partials/header.html" %}
+{% include "partials/sidebar.html" %}
+
+<main>
+  {% block main %}{% endblock %}
+</main>
+
+{% include "partials/footer.html" %}
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/sidebar.js' %}"></script>
+<script src="{% static 'js/search_suggestions.js' %}"></script>
+<script src="{% static 'js/eye_toggle.js' %}"></script>
+{% block page_js %}{% endblock %}
+{% endblock %}

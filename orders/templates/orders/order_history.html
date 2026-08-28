@@ -1,0 +1,69 @@
+{% extends "base_site.html" %}
+{% load static %}
+
+{% block title %}Order history — Amazon{% endblock %}
+
+{% block page_css %}
+<link rel="stylesheet" href="{% static 'css/orders.css' %}">
+{% endblock %}
+
+{% block main %}
+{% if grouped_orders %}
+<div class="history-page">
+  <h1 class="history-title">Order history</h1>
+
+  <div class="history-layout">
+    <div class="history-dates" id="history-dates">
+      {% for date, orders in grouped_orders.items %}
+        <button
+          class="history-date-btn {% if forloop.first %}active{% endif %}"
+          data-date="{{ date|date:'Y-m-d' }}"
+          type="button"
+        >
+          {{ date|date:"Y/m/d" }}
+        </button>
+      {% endfor %}
+    </div>
+
+    <div class="history-items" id="history-items">
+      {% for date, orders in grouped_orders.items %}
+        <div
+          class="history-group {% if not forloop.first %}hidden{% endif %}"
+          data-date="{{ date|date:'Y-m-d' }}"
+        >
+          {% for order in orders %}
+            {% for item in order.items.all %}
+              <div class="history-item">
+                <div class="history-item-img">
+                  {% if item.product %}
+                    <img src="{{ item.product.image.url }}" alt="{{ item.product_name }}">
+                  {% else %}
+                    <div class="history-item-img-placeholder">—</div>
+                  {% endif %}
+                </div>
+                <div class="history-item-info">
+                  <p class="history-item-name">{{ item.product_name }}</p>
+                  <p class="history-item-price">${{ item.product_price }}</p>
+                </div>
+                <div class="history-item-qty">
+                  <span class="qty-badge">{{ item.quantity }}</span>
+                  <span class="qty-label">Bought</span>
+                </div>
+              </div>
+            {% endfor %}
+          {% endfor %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% else %}
+<div class="empty-state">
+  <p>You haven't made any purchases yet</p>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block page_js %}
+<script src="{% static 'js/order_history.js' %}"></script>
+{% endblock %}

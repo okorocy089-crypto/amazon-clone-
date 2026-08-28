@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Register — Amazon{% endblock %}
+
+{% block content %}
+<div class="auth-page">
+  <div class="auth-card">
+    <h1 class="auth-title">Create your account</h1>
+
+    <form method="post" novalidate>
+      {% csrf_token %}
+
+      {% if form.non_field_errors %}
+        <div class="form-error-banner">
+          {% for error in form.non_field_errors %}
+            {{ error }}
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      <div class="field-row">
+        <div>
+          <input
+            class="field"
+            type="text"
+            name="first_name"
+            placeholder="First name"
+            value="{{ form.first_name.value|default:'' }}"
+          >
+          {% if form.first_name.errors %}
+            <div class="field-error">{{ form.first_name.errors.0 }}</div>
+          {% endif %}
+        </div>
+        <div>
+          <input
+            class="field"
+            type="text"
+            name="last_name"
+            placeholder="Last name"
+            value="{{ form.last_name.value|default:'' }}"
+          >
+          {% if form.last_name.errors %}
+            <div class="field-error">{{ form.last_name.errors.0 }}</div>
+          {% endif %}
+        </div>
+      </div>
+
+      <input
+        class="field"
+        type="email"
+        name="email"
+        placeholder="Email"
+        value="{{ form.email.value|default:'' }}"
+      >
+      {% if form.email.errors %}
+        <div class="field-error">{{ form.email.errors.0 }}</div>
+      {% endif %}
+
+      <input
+        class="field"
+        type="password"
+        name="password"
+        placeholder="Password"
+      >
+      {% if form.password.errors %}
+        <div class="field-error">{{ form.password.errors.0 }}</div>
+      {% endif %}
+
+      <input
+        class="field"
+        type="password"
+        name="confirm_password"
+        placeholder="Confirm password"
+      >
+      {% if form.confirm_password.errors %}
+        <div class="field-error">{{ form.confirm_password.errors.0 }}</div>
+      {% endif %}
+
+      <button type="submit" class="btn btn-block">Register</button>
+    </form>
+
+    <p class="auth-footer-link">
+      Got an account? <a href="{% url 'login' %}">Login</a>
+    </p>
+  </div>
+</div>
+{% endblock %}

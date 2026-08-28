@@ -1,0 +1,62 @@
+{% extends "base_site.html" %}
+{% load static %}
+
+{% block title %}Shopping cart — Amazon{% endblock %}
+
+{% block page_css %}
+<link rel="stylesheet" href="{% static 'css/cart.css' %}">
+{% endblock %}
+
+{% block main %}
+{% if items %}
+<div class="cart-page">
+  <h1 class="cart-title">Shopping cart</h1>
+  <p class="cart-price-label">Price</p>
+
+  <div class="cart-items" id="cart-items">
+    {% for item in items %}
+      <div class="cart-item" data-item-id="{{ item.id }}" data-price="{{ item.product.price }}">
+        <div class="cart-item-img">
+          <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
+        </div>
+
+        <div class="cart-item-body">
+          <p class="cart-item-name">{{ item.product.name }}</p>
+
+          <div class="cart-item-controls">
+            <div class="qty-stepper">
+              <button class="qty-btn decrease-btn" type="button">−</button>
+              <span class="qty-value">{{ item.quantity }}</span>
+              <button class="qty-btn increase-btn" type="button">+</button>
+            </div>
+            <button class="btn btn-remove remove-btn" type="button">Delete</button>
+          </div>
+        </div>
+
+        <p class="cart-item-price">${{ item.product.price }}</p>
+      </div>
+    {% endfor %}
+  </div>
+
+  <div class="cart-summary">
+    <div>
+      <p class="cart-total-label">TOTAL</p>
+      <p class="cart-total-amount" id="cart-total">${{ total }}</p>
+    </div>
+    <div class="cart-summary-actions">
+      {# checkout link wired in once the checkout flow exists #}
+      <a href="{% url 'checkout' %}" class="btn">Checkout</a>
+      <button class="btn btn-remove" type="button" id="remove-all-btn">Remove all</button>
+    </div>
+  </div>
+</div>
+{% else %}
+<div class="empty-state">
+  <p>You have not added anything yet</p>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block page_js %}
+<script src="{% static 'js/cart.js' %}"></script>
+{% endblock %}

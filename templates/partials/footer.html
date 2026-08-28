@@ -1,0 +1,26 @@
+{% load static %}
+<footer class="site-footer">
+  <div class="footer-links">
+    <div class="footer-col">
+      <a href="{% url 'order_history' %}">History</a>
+      {% if request.user.is_authenticated %}
+        <a href="{% url 'logout' %}">Logout</a>
+      {% else %}
+        <a href="{% url 'register' %}">Your account</a>
+      {% endif %}
+      <a href="javascript:void(0)">Become an affiliate</a>
+      <a href="mailto:learner4010@gmail.com">Customer support</a>
+    </div>
+    <div class="footer-col">
+      <a href="javascript:void(0)">Privacy Policy</a>
+      <a href="javascript:void(0)">Amazon Prime</a>
+      <a href="javascript:void(0)">Amazon music</a>
+      <a href="javascript:void(0)">Currency converter</a>
+    </div>
+  </div>
+
+  <div class="footer-logo-wrap">
+    <img src="{% static 'images/logo2.jpg' %}" alt="Amazon" class="logo-img" style="height:36px;width:auto;">
+  </div>
+  <p class="footer-copy">© 1996-2026, Amazon.com, Inc. or its affiliates</p>
+</footer>

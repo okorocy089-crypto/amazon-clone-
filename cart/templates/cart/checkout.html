@@ -1,0 +1,55 @@
+{% extends "base_site.html" %}
+{% load static %}
+
+{% block title %}Checkout — Amazon{% endblock %}
+
+{% block page_css %}
+<link rel="stylesheet" href="{% static 'css/forms.css' %}">
+{% endblock %}
+
+{% block main %}
+<div class="form-page">
+  <div class="form-card" style="max-width: 600px;">
+    <h1 class="form-title">Checkout</h1>
+
+    {% if error %}
+      <div class="form-error-banner">{{ error }}</div>
+    {% endif %}
+
+    <div class="checkout-items">
+      {% for item in items %}
+        <div class="checkout-item">
+          <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="checkout-item-img">
+          <div class="checkout-item-info">
+            <p class="checkout-item-name">{{ item.product.name }}</p>
+            <p class="checkout-item-qty">Qty: {{ item.quantity }}</p>
+          </div>
+          <p class="checkout-item-price">${{ item.product.price }}</p>
+        </div>
+      {% endfor %}
+    </div>
+
+    <div class="checkout-total">
+      <span>Total</span>
+      <span class="checkout-total-amount">
+        ${% with total=0 %}
+          {% for item in items %}
+            {# total computed in view — we re-derive it here just for display #}
+          {% endfor %}
+        {% endwith %}
+        {{ cart_total }}
+      </span>
+    </div>
+
+    <p class="checkout-card-info">
+      Paying with:
+      <strong>{{ request.user.paymentcard.get_issuer_type_display }} ···· {{ request.user.paymentcard.card_number|slice:"-4:" }}</strong>
+    </p>
+
+    <form method="post">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-block">Confirm purchase</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

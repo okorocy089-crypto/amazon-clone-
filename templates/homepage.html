@@ -1,0 +1,191 @@
+{% extends "base_site.html" %}
+{% load static %}
+
+{% block title %}Amazon{% endblock %}
+
+{% block page_css %}
+<link rel="stylesheet" href="{% static 'css/homepage.css' %}">
+{% endblock %}
+
+{% block main %}
+
+{# ── Hero slider ───────────────────────────────────────── #}
+<section class="hero-slider" id="hero-slider">
+  <div class="hero-track" id="hero-track">
+
+    <a href="{% url 'category_results' sections.school.id %}" class="hero-slide"
+       style="background-image: url('{% static 'images/schooling.jpg' %}');
+          background-size: cover;
+          background-position: center;">
+      <p class="hero-eyebrow">Shop back to school</p>
+      <h2 class="hero-heading">Shop School Essentials<br>at every price</h2>
+    </a>
+
+    <a href="{% url 'category_results' sections.gaming.id %}" class="hero-slide"
+       style="background-image: url('{% static 'images/gaming.jpg' %}');
+          background-size: cover;
+          background-position: center;">
+      <h2 class="hero-heading">Gaming Store</h2>
+      <p class="hero-eyebrow">Upgrade your gaming gear</p>
+    </a>
+
+    <a href="{% url 'category_results' sections.cutlery.id %}" class="hero-slide"
+       style="background-image: url('{% static 'images/kitchen.jpg' %}');
+          background-size: cover;
+          background-position: center;">
+      <h2 class="hero-heading">Kitchen Essentials</h2>
+      <p class="hero-eyebrow">Under $50</p>
+    </a>
+
+    <a href="{% url 'category_results' sections.toys.id %}" class="hero-slide"
+       style="background-image: url('{% static 'images/toying.jpg' %}');
+          background-size: cover;
+          background-position: center;">
+      <h2 class="hero-heading">Toys for<br>Little Ones</h2>
+    </a>
+
+  </div>
+  <button class="hero-arrow hero-arrow-left" id="hero-prev" aria-label="Previous">‹</button>
+  <button class="hero-arrow hero-arrow-right" id="hero-next" aria-label="Next">›</button>
+</section>
+
+{# ── Named category rails ──────────────────────────────── #}
+
+<section class="category-rail">
+  <h2 class="rail-heading">
+    <a href="{% url 'category_results' sections.fashion.id %}">
+      Shop fashion for less <span class="rail-arrow">›</span>
+    </a>
+  </h2>
+  <div class="rail-grid">
+    {% for product in sections.fashion.products %}
+      <a href="{% url 'product_detail' product.id %}" class="rail-item">
+        {% if product.image %}
+  <img src="{{ product.image.url }}" alt="{{ product.name }}">
+{% else %}
+  <img src="{% static 'images/placeholder.png' %}" alt="No image available">
+{% endif %}
+
+      </a>
+    {% empty %}
+      {% for i in "1234" %}<div class="rail-item rail-placeholder"></div>{% endfor %}
+    {% endfor %}
+  </div>
+</section>
+
+<section class="category-rail">
+  <h2 class="rail-heading">
+    <a href="{% url 'category_results' sections.cutlery.id %}">
+      Top categories in kitchen appliances <span class="rail-arrow">›</span>
+    </a>
+  </h2>
+  <div class="rail-grid">
+    {% for product in sections.cutlery.products %}
+      <a href="{% url 'product_detail' product.id %}" class="rail-item">
+        {% if product.image %}
+  <img src="{{ product.image.url }}" alt="{{ product.name }}">
+{% else %}
+  <img src="{% static 'images/placeholder.png' %}" alt="No image available">
+{% endif %}
+
+      </a>
+    {% empty %}
+      {% for i in "1234" %}<div class="rail-item rail-placeholder"></div>{% endfor %}
+    {% endfor %}
+  </div>
+</section>
+
+<section class="category-rail">
+  <h2 class="rail-heading">
+    <a href="{% url 'category_results' sections.computers.id %}">
+      Level up your productivity <span class="rail-arrow">›</span>
+    </a>
+  </h2>
+  <div class="rail-grid">
+    {% for product in sections.computers.products %}
+      <a href="{% url 'product_detail' product.id %}" class="rail-item">
+        {% if product.image %}
+  <img src="{{ product.image.url }}" alt="{{ product.name }}">
+{% else %}
+  <img src="{% static 'images/placeholder.png' %}" alt="No image available">
+{% endif %}
+
+      </a>
+    {% empty %}
+      {% for i in "1234" %}<div class="rail-item rail-placeholder"></div>{% endfor %}
+    {% endfor %}
+  </div>
+</section>
+
+<section class="category-rail">
+  <h2 class="rail-heading">
+    <a href="{% url 'category_results' sections.sports.id %}">
+      Best in sports <span class="rail-arrow">›</span>
+    </a>
+  </h2>
+  <div class="rail-grid">
+    {% for product in sections.sports.products %}
+      <a href="{% url 'product_detail' product.id %}" class="rail-item">
+        {% if product.image %}
+  <img src="{{ product.image.url }}" alt="{{ product.name }}">
+{% else %}
+  <img src="{% static 'images/placeholder.png' %}" alt="No image available">
+{% endif %}
+
+      </a>
+    {% empty %}
+      {% for i in "1234" %}<div class="rail-item rail-placeholder"></div>{% endfor %}
+    {% endfor %}
+  </div>
+</section>
+
+<section class="category-rail">
+  <h2 class="rail-heading">
+    <a href="{% url 'category_results' sections.music.id %}">
+      Top picks in music <span class="rail-arrow">›</span>
+    </a>
+  </h2>
+  <div class="rail-grid">
+    {% for product in sections.music.products %}
+      <a href="{% url 'product_detail' product.id %}" class="rail-item">
+        {% if product.image %}
+  <img src="{{ product.image.url }}" alt="{{ product.name }}">
+{% else %}
+  <img src="{% static 'images/placeholder.png' %}" alt="No image available">
+{% endif %}
+
+      </a>
+    {% empty %}
+      {% for i in "1234" %}<div class="rail-item rail-placeholder"></div>{% endfor %}
+    {% endfor %}
+  </div>
+</section>
+
+{# ── "Checkout our other stuff" tile grid ──────────────── #}
+<section class="other-stuff">
+  <h2 class="other-stuff-title">Checkout our other stuff</h2>
+  <div class="other-stuff-grid">
+    <a href="{% url 'category_results' sections.pets.id %}" class="other-tile"
+       style="background-image: url('{% static 'images/trixie-cat-tree.jpg' %}');">
+      <span class="other-tile-label">Pet Supplies</span>
+    </a>
+    <a href="{% url 'category_results' sections.mobile.id %}" class="other-tile"
+       style="background-image: url('{% static 'images/oneplus-12.jpg' %}');">
+      <span class="other-tile-label">Mobile</span>
+    </a>
+    <a href="{% url 'category_results' sections.wears.id %}" class="other-tile"
+       style="background-image: url('{% static 'images/ck-one-underwear.jpg' %}');">
+      <span class="other-tile-label">Wears</span>
+    </a>
+    <a href="{% url 'category_results' sections.tech.id %}" class="other-tile"
+       style="background-image: url('{% static 'images/tcl-nxtwear-s.jpg' %}');">
+      <span class="other-tile-label">Dope tech</span>
+    </a>
+  </div>
+</section>
+
+{% endblock %}
+
+{% block page_js %}
+<script src="{% static 'js/hero_slider.js' %}"></script>
+{% endblock %}

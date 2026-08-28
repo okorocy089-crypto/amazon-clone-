@@ -1,0 +1,16 @@
+{% extends "base_site.html" %}
+{% load static %}
+
+{% block title %}Delete account — Amazon{% endblock %}
+
+{% block main %}
+<div class="delete-page">
+  <h1 class="delete-title">Do you really want to delete your account?</h1>
+  <p class="delete-warning">This action cannot be undone!</p>
+
+  <form method="post" action="{% url 'confirm_delete' %}">
+    {% csrf_token %}
+    <button type="submit" class="btn-delete">Delete Now</button>
+  </form>
+</div>
+{% endblock %}

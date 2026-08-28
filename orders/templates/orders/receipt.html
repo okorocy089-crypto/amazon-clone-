@@ -1,0 +1,40 @@
+{% extends "base_site.html" %}
+{% load static %}
+
+{% block title %}Receipt — Amazon{% endblock %}
+
+{% block page_css %}
+<link rel="stylesheet" href="{% static 'css/orders.css' %}">
+{% endblock %}
+
+{% block main %}
+<div class="receipt-page">
+  <div class="receipt-card">
+    <div class="receipt-header">
+      <h1>Order confirmed ✓</h1>
+      <p class="receipt-date">{{ order.created_at|date:"F j, Y" }}</p>
+    </div>
+
+    <div class="receipt-items">
+      {% for item in order.items.all %}
+        <div class="receipt-item">
+          <div class="receipt-item-info">
+            <p class="receipt-item-name">{{ item.product_name }}</p>
+            <p class="receipt-item-qty">Qty: {{ item.quantity }}</p>
+          </div>
+          <p class="receipt-item-price">${{ item.product_price }}</p>
+        </div>
+      {% endfor %}
+    </div>
+
+    <div class="receipt-total">
+      <span>Total paid</span>
+      <span class="receipt-total-amount">${{ order.total }}</span>
+    </div>
+
+    <a href="{% url 'homepage' %}" class="btn btn-block" style="margin-top: 2rem; text-align:center;">
+      Go back to homepage
+    </a>
+  </div>
+</div>
+{% endblock %}
