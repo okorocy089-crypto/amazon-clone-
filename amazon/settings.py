@@ -24,12 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-n99i(c#!1jw^38b1t1=n6%#5w8u5l#r)-_ql+(d28soslxxy@v'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-
-ALLOWED_HOSTS = [
-    '127.0.0.1',
-    'gkingn.pythonanywhere.com',
-]
+DEBUG = True
 
 
 # Application definition
@@ -133,7 +128,5 @@ LOGIN_URL = "/login/"
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
-
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 
