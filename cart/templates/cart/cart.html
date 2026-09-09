@@ -1,7 +1,7 @@
 {% extends "base_site.html" %}
 {% load static %}
 
-{% block title %}Shopping cart — Amazon{% endblock %}
+{% block title %}Cart — Amazon{% endblock %}
 
 {% block page_css %}
 <link rel="stylesheet" href="{% static 'css/cart.css' %}">
@@ -10,7 +10,7 @@
 {% block main %}
 {% if items %}
 <div class="cart-page">
-  <h1 class="cart-title">Shopping cart</h1>
+  <h1 class="cart-title">Your cart</h1>
   <p class="cart-price-label">Price</p>
 
   <div class="cart-items" id="cart-items">
@@ -44,9 +44,8 @@
       <p class="cart-total-amount" id="cart-total">${{ total }}</p>
     </div>
     <div class="cart-summary-actions">
-      {# checkout link wired in once the checkout flow exists #}
-      <a href="{% url 'checkout' %}" class="btn">Checkout</a>
       <button class="btn btn-remove" type="button" id="remove-all-btn">Remove all</button>
+      <a href="{% url 'checkout' %}" class="btn">Checkout</a>
     </div>
   </div>
 </div>

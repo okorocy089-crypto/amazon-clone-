@@ -310,3 +310,24 @@
   color: var(--color-text-empty);
   font-size: 1.2rem;
 }
+
+/* ============================================
+   Mobile bottom header — hides on scroll, 
+   reappears when footer comes into view
+   ============================================ */
+@media (max-width: 700px) {
+  .header-bottom {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 150;
+    transform: translateY(0);
+    transition: transform 0.3s ease;
+    justify-content: space-between;
+  }
+
+  .header-bottom.hidden-mobile {
+    transform: translateY(100%);
+  }
+}

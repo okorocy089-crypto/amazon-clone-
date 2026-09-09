@@ -39,7 +39,7 @@
 
     {% if request.user.is_authenticated %}
       <a href="{% url 'add_card' %}" class="sidebar-link">
-        {% if request.user.paymentcard %}Unlink card{% else %}Link credit/debit card{% endif %}
+        {% if request.user.paymentcard %}Unlink card{% else %}Link Payment card{% endif %}
       </a>
       <a href="{% url 'order_history' %}" class="sidebar-link">Order history</a>
       <a href="mailto:learner4010@gmail.com" class="sidebar-link">Customer support</a>
