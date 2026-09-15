@@ -1,45 +1,30 @@
 document.addEventListener('DOMContentLoaded', function () {
     const bottomHeader = document.querySelector('.header-bottom');
-    const footer = document.querySelector('.site-footer');
+    if (!bottomHeader) return;
+    if (window.innerWidth > 700) return;
 
-    if (!bottomHeader || !footer) return;
-    if (window.innerWidth > 700) return; // mobile-only behavior
-
-    let hidden = false;
-
-    function hideBottomHeader() {
-        if (!hidden) {
-            bottomHeader.classList.add('hidden-mobile');
-            hidden = true;
-        }
-    }
-
-    function showBottomHeader() {
-        if (hidden) {
-            bottomHeader.classList.remove('hidden-mobile');
-            hidden = false;
-        }
-    }
-
-    // Hide as soon as the user starts scrolling down at all
     let lastScrollY = window.scrollY;
-    window.addEventListener('scroll', function () {
-        if (window.scrollY > lastScrollY && window.scrollY > 40) {
-            hideBottomHeader();
+    let ticking = false;
+
+    function onScroll() {
+        const currentScrollY = window.scrollY;
+
+        if (currentScrollY < lastScrollY) {
+            // scrolling UP -> hide
+            bottomHeader.classList.add('hidden-mobile');
+        } else if (currentScrollY > lastScrollY) {
+            // scrolling DOWN -> show
+            bottomHeader.classList.remove('hidden-mobile');
         }
-        lastScrollY = window.scrollY;
+
+        lastScrollY = currentScrollY;
+        ticking = false;
+    }
+
+    window.addEventListener('scroll', function () {
+        if (!ticking) {
+            window.requestAnimationFrame(onScroll);
+            ticking = true;
+        }
     }, { passive: true });
-
-    // Reveal again once the footer scrolls into view ("rock bottom")
-    const footerObserver = new IntersectionObserver(function (entries) {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                showBottomHeader();
-            } else if (window.scrollY > lastScrollY) {
-                hideBottomHeader();
-            }
-        });
-    }, { threshold: 0.01 });
-
-    footerObserver.observe(footer);
 });

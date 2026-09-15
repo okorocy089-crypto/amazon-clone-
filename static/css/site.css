@@ -322,12 +322,107 @@
     right: 0;
     bottom: 0;
     z-index: 150;
-    transform: translateY(0);
-    transition: transform 0.3s ease;
     justify-content: space-between;
+    gap: 0;
+    padding: 0.6rem 1rem;
   }
 
-  .header-bottom.hidden-mobile {
-    transform: translateY(100%);
+    /* Hide desktop-only top header elements */
+  .cart-link-desktop,
+  .profile-wrapper-desktop {
+    display: none;
+  }
+
+  /* Show mobile-only top header elements */
+  .profile-wrapper-mobile {
+    display: block;
+  }
+
+  .btn-register-mobile {
+    padding: 0.45rem 0.7rem;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .btn-register-mobile:hover {
+    background: var(--color-btn-hover);
+    text-decoration: none;
+    color: #fff;
+  }
+
+  /* Hide desktop bottom nav (text links + old menu button) */
+  .menu-toggle-desktop,
+  .header-bottom-link-desktop {
+    display: none;
+  }
+
+  /* Show mobile bottom icon nav */
+  .menu-toggle-mobile {
+    display: flex;
+  }
+
+  .header-top {
+    gap: 0.35rem;
+    padding: 0.75rem 0.75rem;
+    flex-wrap: nowrap;
+  }
+
+  .search-bar {
+    flex: 1 1 0;
+    min-width: 0;
+    max-width: none;
+  }
+
+  .search-input {
+    padding: 0.45rem 0.4rem;
+    font-size: 0.78rem;
+    min-width: 0;
+  }
+
+  .search-btn {
+    padding: 0 0.6rem;
+    font-size: 1rem;
+  }
+
+  .logo-img {
+    height: 28px !important;
+  }
+
+  .header-bottom .bottom-nav-icon-link {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.15rem;
+    color: #fff !important;
+    text-decoration: none;
+    font-size: 0.7rem;
+    position: relative;
+  }
+
+  .bottom-nav-icon-link:hover {
+    color: var(--color-link);
+    text-decoration: none;
+  }
+
+  .bottom-nav-icon-link .cart-badge {
+    position: absolute;
+    top: -6px;
+    right: -10px;
+  }
+
+  body {
+    padding-bottom: 64px; /* roughly the height of .header-bottom — adjust if it doesn't match */
   }
 }
+
+@media (min-width: 701px) {
+  .profile-wrapper-mobile,
+  .btn-register-mobile,
+  .menu-toggle-mobile,
+  .bottom-nav-icon-link {
+    display: none;
+  }
+}
+
+

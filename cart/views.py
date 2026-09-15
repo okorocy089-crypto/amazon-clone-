@@ -146,6 +146,7 @@ def cart_page_view(request):
     return render(request, "cart/cart.html", {
         "items": items,
         "total": total,
+        "hide_bottom_nav": True,
     })
 
 

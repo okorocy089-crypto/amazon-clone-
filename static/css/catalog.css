@@ -67,6 +67,9 @@
 .add-to-cart-btn {
   margin-top: auto;
   align-self: flex-start;
+  min-width: 120px;
+  text-align: center;
+  white-space: nowrap;
 }
 
 .add-to-cart-btn.added {

@@ -1,7 +1,7 @@
 {% extends "base_site.html" %}
 {% load static %}
 
-{% block title %}Cart — Amazon{% endblock %}
+{% block title %}Your cart — Amazon{% endblock %}
 
 {% block page_css %}
 <link rel="stylesheet" href="{% static 'css/cart.css' %}">
@@ -11,18 +11,17 @@
 {% if items %}
 <div class="cart-page">
   <h1 class="cart-title">Your cart</h1>
-  <p class="cart-price-label">Price</p>
 
-  <div class="cart-items" id="cart-items">
+  {# Desktop layout — horizontal rows #}
+  <div class="cart-items-desktop" id="cart-items">
+    <p class="cart-price-label-desktop">Price</p>
     {% for item in items %}
       <div class="cart-item" data-item-id="{{ item.id }}" data-price="{{ item.product.price }}">
         <div class="cart-item-img">
           <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
         </div>
-
         <div class="cart-item-body">
           <p class="cart-item-name">{{ item.product.name }}</p>
-
           <div class="cart-item-controls">
             <div class="qty-stepper">
               <button class="qty-btn decrease-btn" type="button">−</button>
@@ -32,30 +31,70 @@
             <button class="btn btn-remove remove-btn" type="button">Delete</button>
           </div>
         </div>
-
         <p class="cart-item-price">${{ item.product.price }}</p>
       </div>
     {% endfor %}
   </div>
 
-  <div class="cart-summary">
+  {# Mobile layout — 2-column card grid #}
+  <div class="cart-grid-mobile" id="cart-items-mobile">
+    {% for item in items %}
+      <div class="cart-card-mobile" data-item-id="{{ item.id }}" data-price="{{ item.product.price }}">
+        <div class="cart-card-img">
+          <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
+        </div>
+        <div class="cart-card-body">
+          <p class="cart-card-name">{{ item.product.name }}</p>
+          <p class="cart-card-price">${{ item.product.price }}</p>
+          <div class="qty-stepper">
+            <button class="qty-btn decrease-btn" type="button">−</button>
+            <span class="qty-value">{{ item.quantity }}</span>
+            <button class="qty-btn increase-btn" type="button">+</button>
+          </div>
+          <button class="btn btn-remove remove-btn cart-card-remove" type="button">Remove</button>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  {# Desktop summary bar #}
+  <div class="cart-summary cart-summary-desktop">
     <div>
       <p class="cart-total-label">TOTAL</p>
       <p class="cart-total-amount" id="cart-total">${{ total }}</p>
     </div>
     <div class="cart-summary-actions">
-      <button class="btn btn-remove" type="button" id="remove-all-btn">Remove all</button>
       <a href="{% url 'checkout' %}" class="btn">Checkout</a>
+      <button class="btn btn-remove" type="button" id="remove-all-btn-desktop">Remove all</button>
     </div>
   </div>
+
+  {# Mobile sticky bottom bar — replaces bottom nav on cart page #}
+  <div class="cart-bar-mobile">
+    <div class="cart-bar-total">
+      <p class="cart-bar-label">TOTAL</p>
+      <p class="cart-bar-amount" id="cart-total-mobile">${{ total }}</p>
+    </div>
+    <button class="cart-bar-trash" type="button" id="remove-all-btn-mobile" aria-label="Remove all">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="3 6 5 6 21 6"></polyline>
+        <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"></path>
+        <path d="M10 11v6M14 11v6"></path>
+        <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path>
+      </svg>
+    </button>
+    <a href="{% url 'checkout' %}" class="btn cart-bar-checkout">Checkout</a>
+  </div>
 </div>
+
 {% else %}
-<div class="empty-state">
-  <p>You have not added anything yet</p>
+<div class="empty-state cart-empty-state">
+  <p>Cart is empty</p>
 </div>
 {% endif %}
 {% endblock %}
 
 {% block page_js %}
+<script>document.body.classList.add('cart-page-body');</script>
 <script src="{% static 'js/cart.js' %}"></script>
 {% endblock %}

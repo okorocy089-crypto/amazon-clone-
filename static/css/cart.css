@@ -1,3 +1,6 @@
+/* ============================================
+   Cart page — shared
+   ============================================ */
 .cart-page {
   max-width: var(--max-width);
   margin: 0 auto;
@@ -5,10 +8,11 @@
 }
 
 .cart-title {
-  margin-bottom: 0;
+  margin-bottom: 0.5rem;
 }
 
-.cart-price-label {
+/* ── Desktop layout ── */
+.cart-price-label-desktop {
   text-align: right;
   color: var(--color-text-empty);
   margin: 0 0 0.5rem;
@@ -50,6 +54,14 @@
   gap: 1rem;
 }
 
+.cart-item-price {
+  font-weight: bold;
+  color: var(--color-text-price);
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+/* Qty stepper — shared between desktop and mobile */
 .qty-stepper {
   display: flex;
   align-items: center;
@@ -75,16 +87,11 @@
   min-width: 32px;
   text-align: center;
   font-weight: bold;
+  font-size: 0.95rem;
 }
 
-.cart-item-price {
-  font-weight: bold;
-  color: var(--color-text-price);
-  font-size: 1.1rem;
-  margin: 0;
-}
-
-.cart-summary {
+/* Desktop summary bar */
+.cart-summary-desktop {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -111,17 +118,196 @@
   gap: 1rem;
 }
 
-@media (max-width: 600px) {
-  .cart-item {
-    grid-template-columns: 90px 1fr;
-  }
-  .cart-item-price {
-    grid-column: 1 / -1;
-    text-align: right;
-  }
-  .cart-summary {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
-  }
+/* Hide mobile grid + bar on desktop */
+.cart-grid-mobile,
+.cart-bar-mobile {
+  display: none;
 }
+
+/* Empty state on cart page */
+.cart-empty-state {
+  min-height: 70vh;
+  background: var(--color-empty-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Mobile layout ── */
+@media (max-width: 700px) {
+  .cart-page {
+    padding: 1rem 0.75rem;
+    /* Extra bottom padding so content clears the sticky bar */
+    padding-bottom: 90px;
+  }
+
+  /* Center the heading on mobile */
+  .cart-title {
+    text-align: center;
+    font-size: 2rem;
+  }
+
+  /* Hide desktop layout */
+  .cart-items-desktop,
+  .cart-price-label-desktop,
+  .cart-summary-desktop {
+    display: none;
+  }
+
+  /* Show mobile grid */
+  .cart-grid-mobile {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+
+  /* Each mobile card */
+  .cart-card-mobile {
+    background: #fff;
+    border: 1px solid #e2e2e2;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .cart-card-img {
+    aspect-ratio: 1;
+    background: var(--color-shade-white);
+    overflow: hidden;
+    border-bottom: 1px solid #e2e2e2;
+  }
+
+  .cart-card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .cart-card-body {
+    padding: 0.6rem 0.6rem 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    flex: 1;
+  }
+
+  .cart-card-name {
+    font-size: 0.82rem;
+    margin: 0;
+    line-height: 1.3;
+    /* Clamp to 2 lines so cards stay uniform height */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .cart-card-price {
+    font-weight: bold;
+    font-size: 0.9rem;
+    margin: 0;
+    color: var(--color-text-price);
+  }
+
+  /* Stepper slightly smaller on mobile */
+  .cart-card-mobile .qty-stepper {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .cart-card-mobile .qty-btn {
+    flex: 1;
+    height: 30px;
+  }
+
+  .cart-card-mobile .qty-value {
+    flex: 1;
+    text-align: center;
+  }
+
+  /* Full-width remove button */
+  .cart-card-remove {
+    width: 100%;
+    margin-top: 0.25rem;
+    padding: 0.45rem 0;
+    font-size: 0.85rem;
+    border-radius: var(--radius-md);
+  }
+
+  /* Mobile sticky bottom bar — replaces bottom nav */
+  .cart-bar-mobile {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border-top: 1px solid #e2e2e2;
+    padding: 0.75rem 1rem;
+    z-index: 200;
+    box-shadow: 0 -2px 8px rgba(0,0,0,0.08);
+  }
+
+  .cart-bar-total {
+    flex: 1;
+  }
+
+  .cart-bar-label {
+    font-size: 0.75rem;
+    color: var(--color-text-empty);
+    margin: 0;
+  }
+
+  .cart-bar-amount {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: var(--color-text-price);
+    margin: 0;
+  }
+
+  .cart-bar-trash {
+    background: none;
+    border: 1.5px solid var(--color-remove);
+    border-radius: 50%;
+    color: var(--color-remove);
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    padding: 0;
+  }
+
+  .cart-bar-trash:hover {
+    background: var(--color-remove);
+    color: #fff;
+  }
+
+  .cart-bar-checkout {
+    flex-shrink: 0;
+    padding: 0.65rem 1.4rem;
+    font-size: 1rem;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  /* Hide the site-wide mobile bottom nav on cart page */
+  body.cart-page-body .header-bottom {
+    display: none;
+  }
+
+  body.cart-page-body {
+    padding-bottom: 0;
+  }
+
+}
+
+body.cart-page-body .site-footer {
+  display: none;
+}
+

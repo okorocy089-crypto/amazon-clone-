@@ -13,12 +13,14 @@
       <button type="submit" class="search-btn" aria-label="Search">→</button>
     </form>
 
-    <a href="{% url 'cart_page' %}" class="cart-link">
+    {# Desktop-only: cart link stays in top header #}
+    <a href="{% url 'cart_page' %}" class="cart-link cart-link-desktop">
       Cart
       <span class="cart-badge">{{ cart_count }}</span>
     </a>
 
-    <div class="profile-wrapper">
+    {# Desktop-only: profile dropdown stays in top header #}
+    <div class="profile-wrapper profile-wrapper-desktop">
       <button class="profile-icon-btn" aria-label="Account">
         <svg width="28" height="28" viewBox="0 0 24 24" fill="none"
              stroke="currentColor" stroke-width="2">
@@ -44,10 +46,37 @@
         {% endif %}
       </div>
     </div>
+
+    {# Mobile-only: guest sees Register button, logged-in sees profile icon #}
+    {% if request.user.is_authenticated %}
+      <div class="profile-wrapper profile-wrapper-mobile">
+        <button class="profile-icon-btn" aria-label="Account">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="8" r="4"></circle>
+            <path d="M4 20c0-4 4-6 8-6s8 2 8 6"></path>
+          </svg>
+        </button>
+        <div class="profile-dropdown">
+          <div class="profile-user-row">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="8" r="4"></circle>
+              <path d="M4 20c0-4 4-6 8-6s8 2 8 6"></path>
+            </svg>
+            <span class="profile-name">{{ request.user.first_name }}</span>
+          </div>
+          <a href="{% url 'logout' %}" class="btn btn-block">Logout</a>
+        </div>
+      </div>
+    {% else %}
+      <a href="{% url 'register' %}" class="btn-register-mobile">Register</a>
+    {% endif %}
   </div>
 
   <div class="header-bottom">
-    <button class="menu-toggle" id="menu-toggle-btn">
+    {# Desktop: existing text-link nav, unchanged #}
+    <button class="menu-toggle menu-toggle-desktop" id="menu-toggle-btn-desktop">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
            stroke="currentColor" stroke-width="2.5">
         <line x1="3" y1="6" x2="21" y2="6"></line>
@@ -56,12 +85,61 @@
       </svg>
       All
     </button>
-    <a href="#">Today's Deals</a>
-    <a href="mailto:learner4010@gmail.com">Customer Support</a>
+    <a href="#" class="header-bottom-link-desktop">Today's Deals</a>
+    <a href="mailto:learner4010@gmail.com" class="header-bottom-link-desktop">Customer Support</a>
     {% if request.user.is_authenticated %}
-      <a href="#">Sell</a>
+      <a href="#" class="header-bottom-link-desktop">Sell</a>
     {% else %}
-      <a href="{% url 'register' %}">Sell</a>
+      <a href="{% url 'register' %}" class="header-bottom-link-desktop">Sell</a>
     {% endif %}
+
+    {# Mobile: icon nav bar #}
+    <button class="menu-toggle menu-toggle-mobile" id="menu-toggle-btn-mobile" aria-label="Menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2.5" class="hamburger-icon">
+        <line class="ham-line ham-line-top" x1="3" y1="6" x2="21" y2="6"></line>
+        <line class="ham-line ham-line-mid" x1="3" y1="12" x2="21" y2="12"></line>
+        <line class="ham-line ham-line-bottom" x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </button>
+
+    <a href="#" class="bottom-nav-icon-link">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"></circle>
+        <text x="12" y="16" text-anchor="middle" font-size="11" fill="currentColor" stroke="none">$</text>
+      </svg>
+      <span>Deals</span>
+    </a>
+
+    {% if request.user.is_authenticated %}
+      <a href="#" class="bottom-nav-icon-link">
+    {% else %}
+      <a href="{% url 'register' %}" class="bottom-nav-icon-link">
+    {% endif %}
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="7" x2="12" y2="17"></line>
+        <line x1="7" y1="12" x2="17" y2="12"></line>
+      </svg>
+      <span>Sell</span>
+    </a>
+
+    <a href="{% url 'cart_page' %}" class="bottom-nav-icon-link cart-link">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="9" cy="21" r="1"></circle>
+        <circle cx="20" cy="21" r="1"></circle>
+        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+      </svg>
+      <span class="cart-badge">{{ cart_count }}</span>
+      <span>Cart</span>
+    </a>
+
+    <a href="mailto:learner4010@gmail.com" class="bottom-nav-icon-link">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+      </svg>
+      <span>Support</span>
+    </a>
   </div>
 </header>

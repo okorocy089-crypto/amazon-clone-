@@ -26,7 +26,7 @@ document.querySelectorAll(".add-to-cart-btn").forEach((btn) => {
         btn.classList.add("added");
         btn.textContent = "Added";
 
-        const badge = document.querySelector(".cart-badge");
+        const badge = document.querySelectorAll(".cart-badge").forEach(b => b.textContent = data.cart_count);
         if (badge) badge.textContent = data.cart_count;
       })
       .catch(() => {
