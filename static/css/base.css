@@ -1,13 +1,15 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
+
 :root {
-  --font-body: Arial, Helvetica, sans-serif;
+  --font-body: "Roboto", Arial, Helvetica, sans-serif;
 
  
-  --color-shade-white: #f7f7f5;   /* fields, cart bg, product info bg */
-  --color-header: #f7f7f5;        /* header = same shade of white */
-  --color-bottom-header: #2874f0; /* bottom header bar = blue */
-  --color-footer: #131921;        /* footer = dark navy, amazon-style */
+  --color-shade-white: #f4f6f8;   /* page and subdued surface backgrounds */
+  --color-header: #ffffff;
+  --color-bottom-header: #232f3e;
+  --color-footer: #131921;
   --color-menu-bg: #131921;       /* sidebar menu = dark blue */
-  --color-empty-bg: #e0e0e0;      /* grey, empty-state pages */
+  --color-empty-bg: #e9edf2;
 
  
   --color-text: #111111;          /* default text on shade-white bg */
@@ -19,10 +21,10 @@
   --color-hero-text: #ffffff;
 
  
-  --color-btn: #f0ad30;
-  --color-btn-hover: #d9951c;
-  --color-btn-active: #b87c14;
-  --color-btn-text: #ffffff;
+  --color-btn: #f3a847;
+  --color-btn-hover: #e99428;
+  --color-btn-active: #d47f17;
+  --color-btn-text: #17202b;
 
  
   --color-added: #2e9e4f;
@@ -31,14 +33,25 @@
   --color-remove-hover: #b32626;
 
  
-  --color-link: #e8850c;
-  --color-link-hover: #c56f09;
+  --color-link: #b45309;
+  --color-link-hover: #873f08;
 
- 
-  --radius-md: 8px;
-  --radius-lg: 16px;
-  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.12);
+  --radius-md: 10px;
+  --radius-lg: 18px;
+  --shadow-card: 0 4px 16px rgba(19, 25, 33, 0.08);
   --max-width: 1200px;
+}
+
+@keyframes content-enter {
+  from {
+    opacity: 0;
+    translate: 0 8px;
+  }
+
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
 }
 
 * {
@@ -50,11 +63,15 @@ html, body {
   padding: 0;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: var(--font-body);
   color: var(--color-text);
   background: var(--color-shade-white);
-  line-height: 1.4;
+  line-height: 1.5;
 }
 
 a {
@@ -65,6 +82,17 @@ a {
 a:hover {
   color: var(--color-link-hover);
   text-decoration: underline;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 3px solid rgba(40, 116, 240, 0.55);
+  outline-offset: 3px;
 }
 
 img {
@@ -83,20 +111,24 @@ img {
   color: var(--color-btn-text);
   background: var(--color-btn);
   cursor: pointer;
-  transition: background-color 0.15s ease;
+  transition: background-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
   text-align: center;
 }
 
 .btn:hover {
   background: var(--color-btn-hover);
+  box-shadow: 0 3px 8px rgba(19, 25, 33, 0.14);
+  text-decoration: none;
 }
 
 .btn:active {
   background: var(--color-btn-active);
+  transform: translateY(1px);
 }
 
 .btn-added {
   background: var(--color-added);
+  color: #ffffff;
 }
 
 .btn-added:hover {
@@ -121,7 +153,7 @@ img {
   width: 100%;
   padding: 0.85rem 1rem;
   margin-bottom: 1rem;
-  border: 1px solid #cfcfcf;
+  border: 1px solid #cbd2da;
   border-radius: var(--radius-md);
   background: #ffffff;
   font-family: var(--font-body);
@@ -130,8 +162,8 @@ img {
 }
 
 .field:focus {
-  outline: 2px solid var(--color-bottom-header);
-  outline-offset: 1px;
+  outline: 3px solid rgba(40, 116, 240, 0.22);
+  border-color: #2874f0;
 }
 
 .field-error {
@@ -161,10 +193,10 @@ img {
   width: 100%;
   max-width: 420px;
   background: var(--color-shade-white);
-  border: 1px solid #e2e2e2;
+  border: 1px solid #e2e7ed;
   border-radius: var(--radius-lg);
   padding: 2.5rem 2rem;
-  box-shadow: var(--shadow-card);
+  box-shadow: 0 12px 36px rgba(19, 25, 33, 0.1);
 }
 
 .auth-title {
@@ -200,4 +232,16 @@ img {
 .empty-state p {
   color: var(--color-text-empty);
   font-size: 1.2rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-delay: 0ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
 }
