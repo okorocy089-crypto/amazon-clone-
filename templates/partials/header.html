@@ -7,9 +7,10 @@
     <img src="{% static 'images/images.png' %}" alt="Amazon" class="logo-img" style="height:46px;width:auto;">  
     </a>
 
-    <form method="get" action="{% url 'search_results' %}" class="search-bar">
+    <form method="get" action="{% url 'search_results' %}" class="search-bar"
+          data-suggestions-url="{% url 'search_suggestions' %}">
       <input type="text" name="q" class="search-input" placeholder="Search Amazon"
-             id="search-input" autocomplete="off">
+             id="search-input" autocomplete="off" aria-expanded="false">
       <button type="submit" class="search-btn" aria-label="Search">→</button>
     </form>
 
@@ -136,8 +137,10 @@
 
     <a href="mailto:learner4010@gmail.com" class="bottom-nav-icon-link">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+        <path d="M3 12a9 9 0 0 1 18 0"></path>
+        <rect x="3" y="11" width="4" height="8" rx="2"></rect>
+        <rect x="17" y="11" width="4" height="8" rx="2"></rect>
+        <path d="M21 17v1a4 4 0 0 1-4 4h-3"></path>
       </svg>
       <span>Support</span>
     </a>

@@ -9,7 +9,13 @@
 
 {% block main %}
 <div class="listing-page">
-  <h1 class="listing-title">Results for "{{ query }}"</h1>
+  <h1 class="listing-title">
+    {% if has_related_results %}
+      Related products for "{{ query }}"
+    {% else %}
+      Results for "{{ query }}"
+    {% endif %}
+  </h1>
 
   {% if results %}
     <div class="product-grid">
@@ -48,3 +54,5 @@
 {% block page_js %}
 <script src="{% static 'js/add_to_cart.js' %}"></script>
 {% endblock %}
+
+{% block site_footer %}{% endblock %}
